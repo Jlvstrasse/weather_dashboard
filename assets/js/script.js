@@ -7,11 +7,21 @@ const historyList = document.getElementById('history');
 
 let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
+//Search button triggers search
 searchButton.addEventListener('click', () => {
     const city = cityInput.value.trim();
     if (city) {
         getWeatherData(city);
         addToHistory(city);
+        cityInput.value = ''; // Clear the input field
+    }
+});
+
+// Event listener for pressing "Enter" key
+cityInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('search-button').click()
     }
 });
 
@@ -22,6 +32,7 @@ historyList.addEventListener('click', (event) => {
     }
 });
 
+//local storage
 function addToHistory(city) {
     if (!searchHistory.includes(city)) {
         searchHistory.push(city);
